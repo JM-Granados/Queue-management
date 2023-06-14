@@ -1,0 +1,193 @@
+# depslib dependency file v1.0
+1665690521 source:c:\tec\estructuras de datos\administracioncolas\main.cpp
+	<iostream>
+	<cstring>
+	"area.h"
+	"servicios.h"
+	"ventanilla.h"
+	"List.h"
+	"ArrayList.h"
+	"Controlador.h"
+	<time.h>
+	<cstdlib>
+
+1665718213 source:c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\main.cpp
+	<iostream>
+	<cstring>
+	"area.h"
+	"servicios.h"
+	"ventanilla.h"
+	"List.h"
+	"ArrayList.h"
+	"Controlador.h"
+	<time.h>
+	<cstdlib>
+	<limits>
+	<stdio.h>
+
+1665715874 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\area.h
+	<string>
+	"time.h"
+	"List.h"
+	"ArrayList.h"
+	"PriorityQueue.h"
+	"LinkedPriorityQueue.h"
+	"servicios.h"
+	"ventanilla.h"
+	"tiquete.h"
+
+1665718094 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\list.h
+
+1665718094 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\arraylist.h
+	"List.h"
+	<stdexcept>
+
+1665503913 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\priorityqueue.h
+
+1665700973 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\linkedpriorityqueue.h
+	<iostream>
+	<stdexcept>
+	"PriorityQueue.h"
+	"LinkedQueue.h"
+
+1665700973 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\linkedqueue.h
+	<stdexcept>
+	<iostream>
+	"Node.h"
+	"Queue.h"
+
+1665503913 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\node.h
+
+1665503913 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\queue.h
+
+1665700973 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\servicios.h
+
+1665703920 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\ventanilla.h
+	"tiquete.h"
+
+1665455062 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\listaservicios.h
+	"servicios.h"
+	"List.h"
+	"ArrayList.h"
+
+1665691176 c:\tec\estructuras de datos\administracioncolas\include\area.h
+	<string>
+	"time.h"
+	"List.h"
+	"ArrayList.h"
+	"PriorityQueue.h"
+	"LinkedPriorityQueue.h"
+	"servicios.h"
+	"ventanilla.h"
+	"tiquete.h"
+
+1665503913 c:\tec\estructuras de datos\administracioncolas\include\list.h
+
+1665681948 c:\tec\estructuras de datos\administracioncolas\include\arraylist.h
+	"List.h"
+	<stdexcept>
+
+1665503913 c:\tec\estructuras de datos\administracioncolas\include\priorityqueue.h
+
+1665610473 c:\tec\estructuras de datos\administracioncolas\include\linkedpriorityqueue.h
+	<iostream>
+	<stdexcept>
+	"PriorityQueue.h"
+	"LinkedQueue.h"
+
+1665684995 c:\tec\estructuras de datos\administracioncolas\include\linkedqueue.h
+	<stdexcept>
+	<iostream>
+	"Node.h"
+	"Queue.h"
+
+1665503913 c:\tec\estructuras de datos\administracioncolas\include\node.h
+
+1665503913 c:\tec\estructuras de datos\administracioncolas\include\queue.h
+
+1665550703 c:\tec\estructuras de datos\administracioncolas\include\servicios.h
+
+1665627919 c:\tec\estructuras de datos\administracioncolas\include\ventanilla.h
+	"tiquete.h"
+
+1665541540 c:\tec\estructuras de datos\administracioncolas\include\tiquete.h
+
+1665530649 c:\tec\estructuras de datos\administracioncolas\include\listaservicios.h
+	"servicios.h"
+	"List.h"
+	"ArrayList.h"
+
+1665690553 c:\tec\estructuras de datos\administracioncolas\include\controlador.h
+	"servicios.h"
+	"area.h"
+	<string>
+
+1665550862 source:c:\users\jm\downloads\administracioncolas\main.cpp
+	<iostream>
+	<cstring>
+	"area.h"
+	"servicios.h"
+	"ventanilla.h"
+	"List.h"
+	"ArrayList.h"
+	"Controlador.h"
+	<time.h>
+	<cstdlib>
+
+1665550440 c:\users\jm\downloads\administracioncolas\include\area.h
+	"time.h"
+	"List.h"
+	"ArrayList.h"
+	"PriorityQueue.h"
+	"LinkedPriorityQueue.h"
+	"servicios.h"
+	"ventanilla.h"
+	"tiquete.h"
+
+1665503913 c:\users\jm\downloads\administracioncolas\include\list.h
+
+1665517136 c:\users\jm\downloads\administracioncolas\include\arraylist.h
+	"List.h"
+	<stdexcept>
+
+1665503913 c:\users\jm\downloads\administracioncolas\include\priorityqueue.h
+
+1665503913 c:\users\jm\downloads\administracioncolas\include\linkedpriorityqueue.h
+	<iostream>
+	<stdexcept>
+	"PriorityQueue.h"
+	"LinkedQueue.h"
+
+1665503913 c:\users\jm\downloads\administracioncolas\include\linkedqueue.h
+	<stdexcept>
+	<iostream>
+	"Node.h"
+	"Queue.h"
+
+1665503913 c:\users\jm\downloads\administracioncolas\include\node.h
+
+1665503913 c:\users\jm\downloads\administracioncolas\include\queue.h
+
+1665550703 c:\users\jm\downloads\administracioncolas\include\servicios.h
+
+1665542430 c:\users\jm\downloads\administracioncolas\include\ventanilla.h
+	"tiquete.h"
+
+1665541540 c:\users\jm\downloads\administracioncolas\include\tiquete.h
+
+1665530649 c:\users\jm\downloads\administracioncolas\include\listaservicios.h
+	"servicios.h"
+	"List.h"
+	"ArrayList.h"
+
+1665550703 c:\users\jm\downloads\administracioncolas\include\controlador.h
+	"servicios.h"
+	"area.h"
+
+1665700973 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\tiquete.h
+
+1665718094 c:\users\jm\onedrive\documents\tec.programación\tareas-proyectos-examenes\ed\proyecto 0\administracioncolas\include\controlador.h
+	"servicios.h"
+	"area.h"
+	<string.h>
+

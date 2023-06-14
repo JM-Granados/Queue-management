@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<FileVersion major="1" minor="0" />
+	<ActiveTarget name="Debug" />
+	<File name="include\ventanilla.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="397" topLine="24" />
+		</Cursor>
+	</File>
+	<File name="include\LinkedQueue.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="183" topLine="40" />
+		</Cursor>
+	</File>
+	<File name="include\LinkedPriorityQueue.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="757" topLine="14" />
+		</Cursor>
+	</File>
+	<File name="include\area.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="592" topLine="22" />
+		</Cursor>
+	</File>
+	<File name="include\Controlador.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7262" topLine="85" />
+		</Cursor>
+	</File>
+	<File name="include\servicios.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1129" topLine="14" />
+		</Cursor>
+	</File>
+	<File name="include\PriorityQueue.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include\List.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="62" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include\tiquete.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="232" topLine="18" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4012" topLine="51" />
+		</Cursor>
+		<Folding>
+			<Collapse line="13" />
+			<Collapse line="25" />
+			<Collapse line="29" />
+			<Collapse line="43" />
+			<Collapse line="59" />
+			<Collapse line="87" />
+			<Collapse line="103" />
+			<Collapse line="125" />
+			<Collapse line="131" />
+			<Collapse line="137" />
+			<Collapse line="145" />
+			<Collapse line="147" />
+			<Collapse line="154" />
+			<Collapse line="156" />
+			<Collapse line="174" />
+			<Collapse line="213" />
+			<Collapse line="240" />
+			<Collapse line="246" />
+			<Collapse line="312" />
+			<Collapse line="314" />
+			<Collapse line="323" />
+			<Collapse line="328" />
+			<Collapse line="334" />
+			<Collapse line="340" />
+			<Collapse line="369" />
+			<Collapse line="375" />
+			<Collapse line="383" />
+			<Collapse line="427" />
+			<Collapse line="429" />
+			<Collapse line="438" />
+			<Collapse line="443" />
+			<Collapse line="449" />
+			<Collapse line="455" />
+			<Collapse line="471" />
+			<Collapse line="486" />
+			<Collapse line="507" />
+			<Collapse line="513" />
+			<Collapse line="519" />
+			<Collapse line="527" />
+			<Collapse line="534" />
+			<Collapse line="583" />
+			<Collapse line="589" />
+			<Collapse line="598" />
+			<Collapse line="605" />
+			<Collapse line="612" />
+			<Collapse line="619" />
+			<Collapse line="626" />
+		</Folding>
+	</File>
+	<File name="include\ArrayList.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="154" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include\Node.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include\Queue.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+</CodeBlocks_layout_file>

@@ -1,0 +1,652 @@
+#include <iostream>
+#include <cstring>
+#include "area.h"
+#include "servicios.h"
+#include "ventanilla.h"
+#include "List.h"
+#include "ArrayList.h"
+#include "Controlador.h"
+#include <time.h>
+#include <cstdlib>
+#include <limits>
+#include <stdio.h>
+
+/*
+Esta clase corresponde al main y tiene las funciones necesarias para implementar el menú.
+Autores:
+Jose Manuel Granados V
+Adrián Josué Vega Barrantes
+*/
+
+using namespace std;
+Controlador *controlador = new Controlador(); //Global
+
+//Funciones del sistema: ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Estado de las colas y sus funciones/////////////////////////////////////////////////////////////////////////////////////////////////////////
+int estadoColas() {
+    string retorno;
+    system("CLS");
+    cout << "Estado de colas: \nÁreas existentes y su cantidad de ventanillas:\n";
+    if (controlador->getSizeAreas() == 0) {
+        cout << "No hay áreas existentes.";
+    }
+    else controlador->printAreas();
+    cout << "\nPresione cualquier tecla seguido de un enter para regresar al menú: ";
+    cin >> retorno;
+    return 0;
+}
+
+//Solicitar tiquete y sus funciones: /HACEN FALTA LAS FUNCIONES//////////////////////////////////////////////////////////////////////////////////
+int seleccionarServicios() {
+    int opcionServicio;
+    string regreso;
+    system("CLS");
+    if (controlador->getSizeServicios() == 0) {
+        cout << "No existe ningún servicio.";
+        cout << "\nPresione culaquier tecla seguida de enter para regresar: ";
+        cin >> regreso;
+        return 0;
+    }
+    cout << "\nMenú de servicios:" << endl;
+    controlador->printServicios();
+    cout << controlador->getSizeServicios() + 1 << ") Regresar.\n" << controlador->getSizeServicios() + 2 << ") Menú principal.\n";
+    cout << "Ingrese la opción que desea: ";
+    while (!(cin >> opcionServicio) || opcionServicio <= 0 ||   opcionServicio > controlador->getSizeServicios() + 2) {
+            cout << "\nError: la opción ingresada es inválida.\nIngrese nuevamente su opción: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    //Restricciones de la opción ingresada:
+    while (opcionServicio < 1 || opcionServicio > controlador->getSizeServicios() + 2) {
+        cout << "\nERROR: La opción ingresada debe ser solo un número entre 1 y " << controlador->getSizeServicios() + 2 << ".";
+        cout << "\nMenú de servicios:" << endl;
+        controlador->printServicios();
+        cout << "Por favor, ingrese una opción válida: ";
+        cin >> opcionServicio;
+    }
+
+    system("CLS");
+    if (opcionServicio == controlador->getSizeServicios() + 1)
+        return 0;
+    if (opcionServicio == controlador->getSizeServicios() + 2)
+        return 1;
+
+    //Atención y regresa
+    servicios *servicio = controlador->getServicio(opcionServicio - 1);
+    tiquete *tiqueteGenerado = controlador->generarTiquete(servicio, 1);
+    cout << "Su número de tiquete es: ";
+    cout << tiqueteGenerado->getNombre();
+    cout << "\nPresione culaquier tecla seguida de enter para regresar: ";
+    cin >> regreso;
+    return 0;
+}
+
+int clientePreferencial() {
+    int opcionServicio;
+    string regreso;
+    system("CLS");
+    if (controlador->getSizeServicios() == 0) {
+        cout << "No existe ningún servicio.";
+        cout << "\nPresione culaquier tecla seguida de enter para regresar: ";
+        cin >> regreso;
+        return 0;
+    }
+    cout << "\nMenú de servicios para cliente preferencial:" << endl;
+    controlador->printServicios();
+    cout << controlador->getSizeServicios() + 1 << ") Regresar.\n" << controlador->getSizeServicios() + 2 << ") Menú principal.\n";
+    cout << "Ingrese la opción que desea: ";
+    while (!(cin >> opcionServicio) || opcionServicio <= 0 ||   opcionServicio > controlador->getSizeServicios() + 2) {
+            cout << "\nError: la opción ingresada es inválida.\nIngrese nuevamente su opción: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    //Restricciones de la opción ingresada:
+    while (opcionServicio < 1 || opcionServicio > controlador->getSizeServicios() + 2) {
+        cout << "\nERROR: La opción ingresada debe ser solo un número entre 1 y " << controlador->getSizeServicios() << ".";
+        cout << "\nMenú de servicios para cliente preferencial:" << endl;
+        controlador->printServicios();
+        cout << "Por favor, ingrese una opción válida: ";
+        cin >> opcionServicio;
+    }
+    if (opcionServicio == controlador->getSizeServicios() + 1)
+        return 0;
+    if (opcionServicio == controlador->getSizeServicios() + 2)
+        return 1;
+
+    system("CLS");
+    servicios *servicio = controlador->getServicio(opcionServicio - 1);
+    tiquete *tiqueteGenerado = controlador->generarTiquete(servicio, 0);
+    cout << "Su número de tiquete es: ";
+    cout << tiqueteGenerado->getNombre();
+    cout << "\nPresione culaquier tecla seguida de enter para regresar: ";
+    cin >> regreso;
+    return 0;
+}
+
+int solicitarTiquete() {
+    string opcionMenu;
+    system("CLS");
+    cout << "\nMenú:\n a) Seleccionar servicio.\n b) Cliente preferencial.\n c) Regresar.\n Ingrese la opción que desee:";
+    cin >> opcionMenu;
+    //Restricciones de la opción ingresada:
+    while (opcionMenu.length() != 1) {
+        cout << "\nERROR: La opción ingresada debe ser solo una letra entre a y c";
+        cout << "\nMenú:\n a) Seleccionar servicio.\n b) Cliente preferencial.\n c) Regresar." << endl;
+        cout << "Por favor, ingrese una opción válida (a-c): ";
+        cin >> opcionMenu;
+    }
+    while (opcionMenu[0] != 'a' && opcionMenu[0] != 'A' && opcionMenu[0] != 'b' && opcionMenu[0] != 'B' && opcionMenu[0] != 'c' && opcionMenu[0] != 'C') {
+        cout << "\nERROR: La opción ingresada debe ser solo una letra entre a y c";
+        cout << "\nMenú:\n a) Seleccionar servicio.\n b) Cliente preferencial.\n c) Regresar." << endl;
+        cout << "Por favor, ingrese una opción válida (a-c): ";
+        cin >> opcionMenu;
+    }
+
+    //Salto a función escogida:
+    if (opcionMenu[0] == 'a' || opcionMenu[0] == 'A') {
+        int retorno = seleccionarServicios();
+        if (retorno == 0) {
+            system("CLS");
+            solicitarTiquete();
+        }
+        if (retorno == 1)
+            return 1;
+    }
+    if (opcionMenu[0] == 'b' || opcionMenu[0] == 'B') {
+        int retorno = clientePreferencial();
+        if (retorno == 0) {
+            system("CLS");
+            solicitarTiquete();
+        }
+        if (retorno == 1)
+            return 1;
+    }
+    if (opcionMenu[0] == 'c' || opcionMenu[0] == 'C')
+        return 1;
+    return 0;
+}
+
+//Atender y sus funciones/HACE FALTA TODO JAJAJA//////////////////////////////////////////////////////////////////////////////////////////////////////////
+int atender() {
+    int opcionArea;
+    int opcionVentanilla;
+    string regreso;
+    system("CLS");
+    if (controlador->getSizeAreas() == 0) {
+        cout << "No existe ninguna área.";
+        cout << "\nPresione culaquier tecla seguida de enter para regresar: ";
+        cin >> regreso;
+        return 0;
+    }
+    cout << "\nMenú de atención: " << endl;
+    controlador->printAreas();
+    cout << controlador->getSizeAreas() + 1 << ") Menú principal.\n";
+    cout << "Ingrese el área desde la cual desea atender: ";
+    while (!(cin >> opcionArea) || opcionArea <= 0 ||  opcionArea > controlador->getSizeAreas() + 1) {
+            cout << "\nError: la opción ingresada es inválida.\nIngrese nuevamente su opción: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    //Restricciones de la opción ingresada:
+    while (opcionArea < 1 || opcionArea > controlador->getSizeAreas() + 1) {
+        cout << "\nERROR: La opción ingresada debe ser solo un número entre 1 y " << controlador->getSizeAreas() + 1 << ".";
+        cout << "\nMenú de áreas:" << endl;
+        controlador->printAreas();
+        cout << controlador->getSizeAreas() + 1 << ") Menú principal.\n";
+        cout << "Por favor, ingrese una opción válida: ";
+        cin >> opcionArea;
+    }
+
+    if (opcionArea == controlador->getSizeAreas() + 1)
+        return 0;
+
+    area *elArea = controlador->getArea(opcionArea - 1);
+    cout << "Ventanillas:\n";
+    controlador->printVentanas(elArea);
+    cout << controlador->cantidadVentanasEnArea(elArea) + 1 << ") Menú principal.\n";
+    cout << "Ingrese la ventanilla desde la cual desea atender: ";
+    while (!(cin >> opcionVentanilla) || opcionVentanilla <= 0 || opcionVentanilla > controlador->getSizeAreas() + 2) {
+            cout << "\nError: la opción ingresada es inválida.\nIngrese nuevamente su opción: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    //Restricciones de la opción ingresada:
+    while (opcionVentanilla < 1 || opcionVentanilla > controlador->cantidadVentanasEnArea(elArea) + 1) {
+        cout << "\nERROR: La opción ingresada debe ser solo un número entre 1 y " << controlador->cantidadVentanasEnArea(elArea) + 1 << ".";
+        cout << "\nMenú de ventanillas:" << endl;
+        controlador->printVentanas(elArea);
+        cout << controlador->cantidadVentanasEnArea(elArea) + 1 << ") Menú principal.\n";
+        cout << "Por favor, ingrese una opción válida: ";
+        cin >> opcionVentanilla;
+    }
+
+    if (opcionVentanilla == controlador->cantidadVentanasEnArea(elArea) + 1)
+        return 0;
+
+    ventanilla *ventana = controlador->getVentana(elArea, opcionVentanilla - 1);
+    cout << controlador->atender(elArea, ventana->getCodigoVentana()) << endl;
+    cout << "\nPresione cualquier tecla seguida de enter para regresar: ";
+    cin >> regreso;
+    return 0;
+}
+
+//Administración y sus funciones /HACE FALTA CREAR LAS FUNCIONES/////////////////////////////////////////////////////////////////////
+int definirAreas() {
+    string opcionMenu, nombreArea, codigoArea, descripcion, opcionError, regresar;
+    int ventanillas;
+    system("CLS");
+    cout << "\nMenú:\n a) Agregar nueva área.\n b) Eliminar un área.\n c) Regresar.\n d) Menu principal. \n Ingrese la opción que desee:";
+    cin >> opcionMenu;
+    //Reestricciones de la opción ingresada:
+    while (opcionMenu.length() != 1) {
+        cout << "\nERROR: La opción ingresada debe ser solo una letra entre a y c";
+        cout << "\nMenú:\n a) Agregar nueva área.\n b) Eliminar un área.\n c) Regresar.\n d) Menu principal. " << endl;
+        cout << "Por favor, ingrese una opción válida (a-d): ";
+        cin >> opcionMenu;
+    }
+    while (opcionMenu[0] != 'a' && opcionMenu[0] != 'A' && opcionMenu[0] != 'b' && opcionMenu[0] != 'B' && opcionMenu[0] != 'c' && opcionMenu[0] != 'C' && opcionMenu[0] != 'd' && opcionMenu[0] != 'D') {
+        cout << "\nERROR: La opción ingresada debe ser solo una letra entre a y c";
+        cout << "\nMenú:\n a) Agregar nueva área.\n b) Eliminar un área.\n c) Regresar.\n d) Menu principal. " << endl;
+        cout << "Por favor, ingrese una opción válida (a-d): ";
+        cin >> opcionMenu;
+    }
+
+    //Salto a funciones:
+    if (opcionMenu[0] == 'a' || opcionMenu[0] == 'A') {
+        system("CLS");
+       // cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Agregar área.\nIngrese el nombre del nuevo área: ";
+        getline(cin, nombreArea);
+        getline(cin, nombreArea);
+        //cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Ingrese el código de la nueva área: ";
+        getline(cin, codigoArea);
+        //cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Ingrese la descripción de la nueva area: ";
+        getline(cin, descripcion);
+        cout << "Por último, ingrese la cantidad de ventanillas que tendrá esta área: ";
+        //Restricciones de opciones ingresadas:
+        while (!(cin >> ventanillas) || ventanillas <= 0) {
+            cout << "\nError: la cantidad de ventanas es inválido.\nIngrese nuevamente la cantidad de ventanillas: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+
+        while (controlador->agregarArea(nombreArea, ventanillas, descripcion, codigoArea) == false) {
+            system("CLS");
+            cout << "Agregar área.\n Error: El área que intenta agregar ya existe.\n ¿Desea intentar agregar una área nuevamente? (s/n): ";
+            cin >> opcionError;
+            //Restricciones de opción ingresada luego del error:
+            while (opcionError.length() != 1) {
+                system("CLS");
+                cout << "\nERROR: La opción ingresada debe ser solo una letra (s/n).";
+                cout << "Por favor, ingrese una opción válida: ";
+                cin >> opcionError;
+            }
+            while (opcionError[0] != 's' && opcionError[0] != 'S' && opcionError[0] != 'n' && opcionError[0] != 'N') {
+                system("CLS");
+                cout << "\nERROR: La opción ingresada debe ser una letra (s/n).";
+                cout << "Por favor, ingrese una opción válida: ";
+                cin >> opcionError;
+            }
+            if (opcionError[0] == 's' || opcionError[0] == 'S') {
+                system("CLS");
+                cout << "Agregar área.\n Ingrese el nombre de la nueva área: ";
+                cin >> nombreArea;
+                cout << "\nIngrese el código de la nueva área: ";
+                cin >> codigoArea;
+                cout << "\nIngrese la descripción de la nueva area: ";
+                cin >> descripcion;
+                cout << "Por último, ingrese la cantidad de ventanillas que tendrá esta área: ";
+                cin >> ventanillas;
+            }
+            if (opcionError[0] == 'n' || opcionError[0] == 'N')
+                return 0;
+        }
+
+        //En el while se agrega el área y acá se confirma:
+        system("CLS");
+        cout << "Área agregada correctamente.\n Presione una tecla seguida de enter para regresar: ";
+        cin >> regresar;
+        return 0;
+    }
+    if (opcionMenu[0] == 'b' || opcionMenu[0] == 'B') {
+        system("CLS");
+        if (controlador->getSizeAreas() == 0) {
+        cout << "No existe ninguna área.";
+        cout << "\nPresione culaquier tecla seguida de enter para regresar: ";
+        cin >> regresar;
+        return 0;
+    }
+        cout << "Eliminar área.\n Ingrese el código del área que desea eliminar: ";
+        cin >> codigoArea;
+        //Restricción de opción ingresada:
+        while (controlador->eliminarArea(codigoArea) == false) {
+            system("CLS");
+            cout << "Eliminar área.\n Error: El área no existe.\n ¿Desea intentar eliminar un área nuevamente? (s/n): ";
+            cin >> opcionError;
+            //Restricción de opcion ingresada luego de error:
+            while (opcionError.length() != 1) {
+                system("CLS");
+                cout << "\nERROR: La opción ingresada debe ser solo una letra (s/n).";
+                cout << "Por favor, ingrese una opción válida: ";
+                cin >> opcionError;
+            }
+            while (opcionError[0] != 's' && opcionError[0] != 'S' && opcionError[0] != 'n' && opcionError[0] != 'N') {
+                system("CLS");
+                cout << "\nERROR: La opción ingresada debe ser una letra (s/n).";
+                cout << "Por favor, ingrese una opción válida: ";
+                cin >> opcionError;
+            }
+            if (opcionError[0] == 's' || opcionError[0] == 'S') {
+                system("CLS");
+                cout << "Eliminar área.\n Ingrese el código del área que desea eliminar: ";
+                cin >> codigoArea;
+            }
+
+            if (opcionError[0] == 'n' || opcionError[0] == 'N')
+                return 0;
+        }
+        //En el while se elimina el área, acá se confirma:
+        system("CLS");
+        cout << "Área eliminada correctamente.\n Presione una tecla seguida de enter para regresar: ";
+        cin >> regresar;
+        return 0;
+    }
+    if (opcionMenu[0] == 'c' || opcionMenu[0] == 'C')
+        return 0;
+    if (opcionMenu[0] == 'd' || opcionMenu[0] == 'D')
+        return 1;
+    return 0;
+}
+
+int definirServicios() {
+    string opcionMenu, nombreServicio, descripcionServicio, codigoArea, opcionError, regresar;
+    system("CLS");
+    cout << "\nOpciones:\n a) Agregar servicio.\n b) Eliminar servicio.\n c) Reordenar servicios.\n d) Regresar.\n e) Menú principal." << endl;
+    cout << "Ingrese la opción que desee (a-e): ";
+    cin >> opcionMenu;
+    //Restricción de opcion ingresada:
+    while (opcionMenu.length() != 1) {
+        cout << "\nERROR: La opción ingresada debe ser solo una letra entre a y f";
+        cout << "\nOpciones:\n a) Agregar servicio.\n b) Eliminar servicio.\n c) Reordenar servicios.\n d) Regresar.\n e) Menú principal." << endl;
+        cout << "Por favor, ingrese una opción válida (a-e): ";
+        cin >> opcionMenu;
+    }
+    while (opcionMenu[0] != 'a' && opcionMenu[0] != 'A' && opcionMenu[0] != 'b' && opcionMenu[0] != 'B' && opcionMenu[0] != 'c' && opcionMenu[0] != 'C' && opcionMenu[0] != 'd' && opcionMenu[0] != 'D' && opcionMenu[0] != 'e' && opcionMenu[0] != 'E') {
+        cout << "\nERROR: La opción ingresada debe ser una letra entre a y f";
+        cout << "\nOpciones:\n a) Agregar servicio.\n b) Eliminar servicio.\n c) Reordenar servicios.\n d) Regresar.\n e) Menú principal." << endl;
+        cout << "Por favor, ingrese una opción válida (a-e): ";
+        cin >> opcionMenu;
+    }
+
+    //Salto a funciones:
+    if (opcionMenu[0] == 'a' || opcionMenu[0] == 'A') {
+        system("CLS");
+        cout << "Agregar servicio.\n Ingrese el nombre del nuevo servicio: ";
+        getline(cin, nombreServicio);
+        getline(cin, nombreServicio);
+        cout << "Ingrese el código del area en la que desea agregar el servicio: ";
+        getline(cin, codigoArea);
+        cout << "Ingrese la descripción del servicio: ";
+        getline(cin, descripcionServicio);
+        //Restricciones de las opciones ingresadas:
+        while (controlador->agregarServicios(nombreServicio, codigoArea, descripcionServicio) == false) {
+            system("CLS");
+            cout << "Agregar servicio.\n Error: El nombre del servicio agregado ya existe o no existe el área.\n ¿Desea intentar agregar un servicio nuevamente? (s/n): ";
+            cin >> opcionError;
+            //Restricciones de opcion ingresada luego de error:
+            while (opcionError.length() != 1) {
+                system("CLS");
+                cout << "\nERROR: La opción ingresada debe ser solo una letra (s/n).";
+                cout << "Por favor, ingrese una opción válida: ";
+                cin >> opcionError;
+            }
+            while (opcionError[0] != 's' && opcionError[0] != 'S' && opcionError[0] != 'n' && opcionError[0] != 'N') {
+                system("CLS");
+                cout << "\nERROR: La opción ingresada debe ser una letra (s/n).";
+                cout << "Por favor, ingrese una opción válida: ";
+                cin >> opcionError;
+            }
+            if (opcionError[0] == 's' || opcionError[0] == 'S') {
+                system("CLS");
+                cout << "Agregar servicio.\n Ingrese el nombre del nuevo servicio: ";
+                cin >> nombreServicio;
+                cout << "Ingrese el código del area en la que desea agregar el servicio: ";
+                cin >> codigoArea;
+                cout << "Ingrese la descripción del servicio: ";
+                cin >> descripcionServicio;
+            }
+            if (opcionError[0] == 'n' || opcionError[0] == 'N')
+                return 0;
+        }
+        system("CLS");
+        cout << "Servicio agregado correctamente.\n Presione una tecla seguida de enter para regresar: ";
+        cin >> regresar;
+        return 0;
+    }
+    if (opcionMenu[0] == 'b' || opcionMenu[0] == 'B') {
+        system("CLS");
+        if (controlador->getSizeServicios() == 0) {
+            cout << "No existe ninguna servicios.";
+            cout << "\nPresione culaquier tecla seguida de enter para regresar: ";
+            cin >> regresar;
+            return 0;
+        }
+        cout << "Eliminar servicio.\n Ingrese el nombre del servicio que desea eliminar: ";
+        cin >> nombreServicio;
+        //restricción opciones ingresadas:
+        while (controlador->eliminarServicio(nombreServicio) == false) {
+            system("CLS");
+            cout << "Eliminar servicio.\n Error: El nombre del servicio no existe.\n ¿Desea intentar eliminar un servicio nuevamente? (s/n): ";
+            cin >> opcionError;
+            //Restricciones de opcion ingresada luego de error:
+            while (opcionError.length() != 1) {
+                system("CLS");
+                cout << "\nERROR: La opción ingresada debe ser solo una letra (s/n).";
+                cout << "Por favor, ingrese una opción válida: ";
+                cin >> opcionError;
+            }
+            while (opcionError[0] != 's' && opcionError[0] != 'S' && opcionError[0] != 'n' && opcionError[0] != 'N') {
+                system("CLS");
+                cout << "\nERROR: La opción ingresada debe ser una letra (s/n).";
+                cout << "Por favor, ingrese una opción válida: ";
+                cin >> opcionError;
+            }
+            if (opcionError[0] == 's' || opcionError[0] == 'S') {
+                system("CLS");
+                cout << "Eliminar servicio.\n Ingrese el nombre del servicio que desea eliminar: ";
+                cin >> nombreServicio;
+            }
+            if (opcionError[0] == 'n' || opcionError[0] == 'N')
+                return 0;
+        }
+        system("CLS");
+        cout << "Servicio eliminado correctamente.\n Presione una tecla seguida de enter para regresar: ";
+        cin >> regresar;
+        return 0;
+    }
+    if (opcionMenu[0] == 'c' || opcionMenu[0] == 'C') {
+        int original, destino;
+        system("CLS");
+        if (controlador->getSizeServicios() == 0) {
+            cout << "No existe ningún servicio.";
+            cout << "\nPresione culaquier tecla seguida de enter para regresar: ";
+            cin >> regresar;
+            return 0;
+        }
+        cout << "Lista de servicios: \n";
+        controlador->printServicios();
+        cout << "Ingrese el número del servicio que desea reordenar: ";
+        while (!(cin >> original) || original <= 0 ||  original > controlador->getSizeServicios()) {
+            cout << "\nError: la opción ingresada es inválida.\nIngrese nuevamente su opción: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        cout << "Ingrese el número del servicio con el que quiere intercambiar el anterior: ";
+        while (!(cin >> destino) || destino <= 0 ||  destino > controlador->getSizeServicios()) {
+            cout << "\nError: la opción ingresada es inválida.\nIngrese nuevamente su opción: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        //Restricciones de la opción ingresada:
+        controlador->reordenarServicios(original - 1, destino - 1);
+        system("CLS");
+        cout << "Lista de servicios reordenada exitosamente: \n";
+        controlador->printServicios();
+        cout << "\nPresione cualquier tecla seguida de un enter para regresar: ";
+        cin >> regresar;
+        return 0;
+    }
+    if (opcionMenu[0] == 'd' || opcionMenu[0] == 'D')
+       return 0;
+    if (opcionMenu[0] == 'e' || opcionMenu[0] == 'E')
+       return 1;
+    return 0;
+}
+
+int administracion() {
+    string opcionMenu;
+    system("CLS");
+    cout << "\nMenú:\n a) Definir áreas.\n b) Definir servicios disponibles.\n c) Regresar.\n Ingrese la opción que desee:";
+    cin >> opcionMenu;
+    //Restricciones de la opción ingresada:
+    while (opcionMenu.length() != 1) {
+        cout << "\nERROR: La opción ingresada debe ser solo una letra entre a y c";
+        cout << "\nMenú:\n a) Definir áreas.\n b) Definir servicios disponibles.\n c) Regresar." << endl;
+        cout << "Por favor, ingrese una opción válida (a-c): ";
+        cin >> opcionMenu;
+    }
+    while (opcionMenu[0] != 'a' && opcionMenu[0] != 'A' && opcionMenu[0] != 'b' && opcionMenu[0] != 'B' && opcionMenu[0] != 'c' && opcionMenu[0] != 'C') {
+        cout << "\nERROR: La opción ingresada debe ser solo una letra entre a y c";
+        cout << "\nMenú:\n a) Definir áreas.\n b) Definir servicios disponibles.\n c) Regresar." << endl;
+        cout << "Por favor, ingrese una opción válida (a-c): ";
+        cin >> opcionMenu;
+    }
+
+    //Salto a función escogida:
+    if (opcionMenu[0] == 'a' || opcionMenu[0] == 'A') {
+        int definirAreasRetorno = definirAreas();
+        if (definirAreasRetorno == 0) //Regresar
+            administracion();
+        if (definirAreasRetorno == 1) //Menu
+            return 1;
+    }
+    if (opcionMenu[0] == 'b' || opcionMenu[0] == 'B') {
+        int definirServiciosRetorno = definirServicios();
+        if (definirServiciosRetorno == 0)
+            administracion();
+        if (definirServiciosRetorno == 1)
+            return 1;
+    }
+    if (opcionMenu[0] == 'c' || opcionMenu[0] == 'C')
+        return 1;
+    return 0;
+}
+
+//HACE FALTA LLAMAR A CADA FUNCIÓN//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int estadisticas() {
+    string regresar;
+    system("CLS");
+    cout << "Estadísticas del sistema:\n" << endl;
+    if (controlador->getCantidadTiquetes() == 0) {
+        cout << "No hay tiquetes dispensados hasta el momento.\nPresiona cualquier tecla seguido de enter para regresar: ";
+        cin >> regresar;
+        return 0;
+    }
+
+    cout << "a) Tiempo promedio de espera por área: " << endl;
+    controlador->esperaPromedio();
+
+    cout << "\nb) Total de tiquetes dispensados por área: " << endl;
+    controlador->totalTiquetes();
+
+    cout << "\nc) Total de tiquetes atendidos por ventanilla: " << endl;
+    controlador->totalTiquetesVentana();
+
+    cout << "d) Total de tiquetes dispensados por servicio: " << endl;
+    controlador->totalTiquetesServicio();
+
+    cout << "\ne) Total de tiquetes preferenciales dispensados en todo el sistema: " << controlador->tiquetesEspeciales();
+
+    cout << "\n\nPresione cualquier tecla seguida de enter para regresar.";
+    cin >> regresar;
+    return 0;
+}
+
+//Menú: ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int menu() {
+    string opcionMenu;
+    cout << "\nMenú:\n a) Ver estado de las colas.\n b) Solicitar tiquete.\n c) Atender.\n d) Administración.\n e) Estadísticas del sistema.\n f) Salir." << endl;
+    cout << "Ingrese la opción que desee (a-f): ";
+    cin >> opcionMenu;
+    //Retricciones de la opcion ingresada:
+    while (opcionMenu.length() != 1) {
+        cout << "\nERROR: La opción ingresada debe ser solo una letra entre a y f";
+        cout << "Menú:\n a) Ver estado de las colas.\n b) Solicitar tiquete.\n c) Atender.\n d) Administración.\n e) Estadísticas del sistema.\n f) Salir." << endl;
+        cout << "Por favor, ingrese una opción válida (a-f): ";
+        cin >> opcionMenu;
+    }
+    while (opcionMenu[0] != 'a' && opcionMenu[0] != 'A' && opcionMenu[0] != 'b' && opcionMenu[0] != 'B' && opcionMenu[0] != 'c' && opcionMenu[0] != 'C' && opcionMenu[0] != 'd' && opcionMenu[0] != 'D' && opcionMenu[0] != 'e' && opcionMenu[0] != 'E' && opcionMenu[0] != 'f' && opcionMenu[0] != 'F') {
+        cout << "\nERROR: La opción ingresada debe ser una letra entre a y f";
+        cout << "Menú:\n a) Ver estado de las colas.\n b) Solicitar tiquete.\n c) Atender.\n d) Administración.\n e) Estadísticas del sistema.\n f) Salir." << endl;
+        cout << "Por favor, ingrese una opción válida (a-f): ";
+        cin >> opcionMenu;
+    }
+
+    //Salto a funciones respecto a la opción escogida
+    //A) Estado Colas
+    if (opcionMenu[0] == 'a' || opcionMenu[0] == 'A') {
+        estadoColas();
+        system("CLS");
+        menu();
+    }
+
+    //B) Solicitar tiquete
+    if (opcionMenu[0] == 'b' || opcionMenu[0] == 'B') {
+        solicitarTiquete(); //1 es cuando se necesita que el menu se imprima otra vez
+        system("CLS");
+        menu();
+    }
+
+    //C) Atender
+    if (opcionMenu[0] == 'c' || opcionMenu[0] == 'C') {
+        atender();
+        system("CLS");
+        menu();
+    }
+
+    //D) Administración
+    if (opcionMenu[0] == 'd' || opcionMenu[0] == 'D') {
+       administracion();
+       system("CLS");
+       menu();
+    }
+
+    //E) Estadísticas
+    if (opcionMenu[0] == 'e' || opcionMenu[0] == 'E') {
+        estadisticas();
+        system("CLS");
+        menu();
+    }
+    return 0;
+}
+
+int main() {
+    setlocale(LC_ALL, "spanish");
+
+    //Bienvenida:
+    cout << "Bienvenido al sistema de administración de colas\n" << endl;
+    controlador->agregarArea("Cajas", 5, "Atención al cliente", "C");
+    controlador->agregarArea("Servicio al cliente", 4, "Servicios a clientes", "S");
+    controlador->agregarArea("Empresarial", 2, "Atencion empresarial", "E");
+    controlador->agregarArea("Información", 1, "Información del sitio", "I");
+
+    controlador->agregarServicios("Retiro", "C", "Retiro de efectivo");
+    controlador->agregarServicios("Depósito", "C", "Depósito de servicios");
+    controlador->agregarServicios("Pagar recibo", "C", "Pagos de deudas");
+    controlador->agregarServicios("Retirar tarjeta", "I", "Retiro de tarjeta");
+    controlador->agregarServicios("Pagar marchamo", "C", "Pago de marchamo");
+    menu();
+    return 0;
+}
